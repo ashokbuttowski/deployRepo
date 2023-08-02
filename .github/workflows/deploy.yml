@@ -1,4 +1,4 @@
-name: 2mins Deployment
+name: 2mins Deployment - checkout
 on:
   schedule:
     - cron: '*/2 * * * *'
