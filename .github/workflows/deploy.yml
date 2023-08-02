@@ -1,4 +1,4 @@
-name: 2mins changes Deployment
+name: 2mins Deployment
 on:
   schedule:
     - cron: '*/2 * * * *'
