@@ -1,0 +1,17 @@
+name: Deploy code branch changes to root branch
+
+on:
+  push:
+    branches:
+      - code
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy changes
+        run: |
+          echo "Deploying changes from code branch to root branch..."
+          git checkout root
+          git merge code
