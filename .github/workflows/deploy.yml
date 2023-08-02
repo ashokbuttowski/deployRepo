@@ -19,7 +19,7 @@ jobs:
           git config user.email "ashokbuttowski@gmail.com"
       
       - name: Fetch changes from 'code' branch
-        run: git pull origin code
+        run: git fetch origin code
       
       - name: Check for changes
         id: check_changes
@@ -29,6 +29,8 @@ jobs:
       - name: Merge changes (if any)
         if: steps.check_changes.outputs.stdout != ''
         run: |
+          git checkout main
+          git merge code -m "Merge changes from code branch"
           git push origin main
       
       - name: No changes to deploy
