@@ -25,6 +25,7 @@ jobs:
         id: check_changes
         run: |
           git diff --exit-code HEAD -- code
+          echo "Number of changes: $?"
       
       - name: Merge changes (if any)
         if: steps.check_changes.outputs.stdout != '0'
