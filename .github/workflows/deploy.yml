@@ -11,7 +11,7 @@ jobs:
       - name: Checkout Source Branch
         uses: actions/checkout@v2
         with:
-          ref: 'code'
+          ref: 'code'  # Replace 'code' with the correct branch name you want to deploy from
 
       - name: Set up Git
         run: |
@@ -27,9 +27,11 @@ jobs:
 
       - name: Merge changes (if any)
         run: |
-          git checkout main
-          git merge code
-          git push origin main
+          if [ -n "$(git status --porcelain)" ]; then
+            git checkout main
+            git merge code -m "Merge changes from code branch"
+            git push origin main
+          fi
         if: steps.check_changes.outputs.stdout != ''
 
       - name: No changes to deploy
