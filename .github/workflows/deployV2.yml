@@ -24,7 +24,7 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --exit-code origin/root..code && echo "changes"
+          git diff --exit-code origin/root -- code && echo "changes"
       
       - name: Merge changes (if any)
         if: steps.check_changes.outputs.stdout == 'changes'
