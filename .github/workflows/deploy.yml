@@ -1,0 +1,37 @@
+name: Daily Deployment
+on:
+  schedule:
+    - cron: '*/2 * * * *'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'source-branch'
+
+      - name: Set up Git
+        run: |
+          git config user.name "Your Name"
+          git config user.email "youremail@example.com"
+
+      - name: Check for changes
+        run: |
+          git fetch origin destination-branch
+          git log --name-only HEAD..origin/destination-branch
+        id: check_changes
+        continue-on-error: true
+
+      - name: Merge changes (if any)
+        run: |
+          git checkout destination-branch
+          git merge source-branch
+          git push origin destination-branch
+        if: steps.check_changes.outputs.stdout != ''
+
+      - name: No changes to deploy
+        run: echo "No new changes to deploy."
+        if: steps.check_changes.outputs.stdout == ''
