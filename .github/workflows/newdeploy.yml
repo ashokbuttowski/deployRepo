@@ -15,3 +15,4 @@ jobs:
           echo "Deploying changes from code branch to root branch..."
           git fetch origin root
           git merge code
+          
