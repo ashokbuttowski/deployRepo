@@ -1,4 +1,4 @@
-name: 2mins Deployment@V2
+name: 2mins Deployment@v23
 on:
   schedule:
     - cron: '*/2 * * * *'
@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Main Branch
+      - name: Checkout Source Branch
         uses: actions/checkout@v2
         with:
-          ref: 'main'  # Switch to the 'main' branch
+          ref: 'code'  # Replace 'code' with the correct branch name you want to deploy from
 
       - name: Set up Git
         run: |
@@ -24,12 +24,13 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          git log --name-only HEAD..origin/code
+          git log --name-only origin/main..origin/code
       
       - name: Merge changes (if any)
         if: steps.check_changes.outputs.stdout != ''
         run: |
-          git rebase origin/code
+          git checkout main
+          git merge code -m "Merge changes from code branch"
           git push origin main
       
       - name: No changes to deploy
