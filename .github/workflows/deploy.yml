@@ -1,4 +1,4 @@
-name: 2mins Deployment@v23
+name: 2mins Deployment@R15
 on:
   schedule:
     - cron: '*/2 * * * *'
@@ -24,7 +24,7 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          git log --name-only origin/main..origin/code
+          git diff --name-only origin/main...origin/code
       
       - name: Merge changes (if any)
         if: steps.check_changes.outputs.stdout != ''
