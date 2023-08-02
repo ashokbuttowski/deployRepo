@@ -1,4 +1,4 @@
-name: 2mins Deployment
+name: 2mins DeploymentV2
 on:
   schedule:
     - cron: '*/2 * * * *'
@@ -24,16 +24,15 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --exit-code origin/root -- code && echo "changes"
+          git diff --exit-code HEAD -- code
       
       - name: Merge changes (if any)
-        if: steps.check_changes.outputs.stdout == 'changes'
+        if: steps.check_changes.outputs.stdout != '0'
         run: |
           git checkout root
           git merge code -m "Merge changes from code branch"
           git push origin root
       
       - name: No changes to deploy
-        if: steps.check_changes.outputs.stdout != 'changes'
-        run: |
-          echo "No changes to deploy. Skipping merge."
+        if: steps.check_changes.outputs.stdout == '0'
+        run: echo "No new changes to deploy."
