@@ -13,5 +13,5 @@ jobs:
       - name: Deploy changes
         run: |
           echo "Deploying changes from code branch to root branch..."
-          git checkout root
+          git fetch origin root
           git merge code
